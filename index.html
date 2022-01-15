@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>game</title>
+  </head>
+  <body>
+    <script type="module">
+      // import kaboom lib
+      import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
+
+      // initialize kaboom context
+      kaboom({
+        background: [ 255, 255, 255 ],
+      });
+
+      loadSprite('player','/src/player.png');
+
+      onKeyPress("f", () => {
+        fullscreen(!isFullscreen())
+      });
+
+      scene('game',()=>{
+
+        layers([
+          'game',
+          'score',
+        ]);
+
+        gravity(200);
+
+        const player = add([
+          sprite('player'),
+          body(),
+          area(),
+          pos(50,height()/2),
+          layer('game'),
+          scale(0.15),
+        ]);
+        
+        let score=0;
+
+        const scoreLabel = add([
+          text(score),
+          pos(width()/2,50),
+          layer('score'),
+          fixed(),
+        ]);
+
+        add([
+          rect(width(),50),
+          pos(0,height()-50),
+          solid(),
+          area(),
+          layer('game'),
+          color(0,0,0)
+        ]);
+  
+        add([
+          rect(width(),50),
+          pos(0,0),
+          solid(),
+          layer('game'),
+          area(),
+          color(0,0,0)
+        ]);
+      
+
+      onKeyPress('space',()=>{
+        player.jump(200)
+      });
+
+      onClick(()=>{
+        player.jump(200)
+      });
+
+      const obstacle = ()=>{
+        
+        const h = rand(height()/2-250,height()/2-150);
+
+        add([
+          rect(50,h),
+          pos(width(),50),
+          solid(),
+          area(),
+          color(0,0,0),
+          layer('game'),
+          move(LEFT,240),
+          cleanup(),
+          'piller',
+        ]);
+
+        
+
+        add([
+          rect(50,h),
+          pos(width(),height()-(h+50)),
+          solid(),
+          area(),
+          layer('game'),
+          color(0,0,0),
+          move(LEFT,240),
+          cleanup(),
+          'piller',
+        ]);
+
+        wait(rand(0.5,1.5),obstacle); 
+
+      }
+
+      obstacle();
+
+      onUpdate('piller',(p)=>{
+        if(p.pos.x<-50)
+        {
+          score++;
+          scoreLabel.text = score/2;
+        }
+      });
+
+      
+
+      player.onCollide('piller',()=>{
+        shake();
+        go('over');
+      });
+
+
+    });
+
+    scene('over',()=>{
+      add([
+        text('Game Over'),
+        pos(center()),
+        origin('center'),
+      ]);
+
+      onKeyPress('space',()=>{
+        go('game');
+      });
+
+      onClick(()=>{
+        go('game');
+      });
+
+    });
+
+    onKeyPress('space',()=>{
+      go('game');
+    });
+
+    onClick(()=>{
+      go('game');
+    })
+
+    </script>
+  </body>
+</html>
