@@ -15,9 +15,34 @@
 
       loadSprite('player','/src/player.png');
       loadSprite('cloud','/src/cloud.png');
+      loadSprite('home','/src/home.png');
 
       onKeyPress("f", () => {
         fullscreen(!isFullscreen())
+      });
+
+      scene('home',()=>{
+
+        add([
+          sprite('home'),
+          pos(center()),
+          origin('center'),
+        ]);
+
+        add([
+          text(width()>=1025?'Press Space to Start':'Tap to Start'),
+          pos(center()),
+          origin('center')
+        ]);
+
+        onKeyPress('space',()=>{
+          go('game');
+        });
+
+        onClick(()=>{
+          go('game');
+        })
+
       });
 
       scene('game',()=>{
@@ -159,10 +184,16 @@
     });
 
     scene('over',()=>{
-      add([
+      const gameOver =  add([
         text('Game Over'),
         pos(center()),
         origin('center'),
+      ]);
+
+      add([
+          text(width()>=1025?'Press Space to Try Again':'Tap to Try Again'),
+          pos(gameOver.pos.x,gameOver.pos.y+100),
+          origin('center')
       ]);
 
       onKeyPress('space',()=>{
@@ -175,13 +206,7 @@
 
     });
 
-    onKeyPress('space',()=>{
-      go('game');
-    });
-
-    onClick(()=>{
-      go('game');
-    })
+    go('home');
 
     </script>
   </body>
