@@ -10,10 +10,11 @@
 
       // initialize kaboom context
       kaboom({
-        background: [ 255, 255, 255 ],
+        background: [ 82, 255, 255 ],
       });
 
       loadSprite('player','/src/player.png');
+      loadSprite('cloud','/src/cloud.png');
 
       onKeyPress("f", () => {
         fullscreen(!isFullscreen())
@@ -22,6 +23,7 @@
       scene('game',()=>{
 
         layers([
+          'bg',
           'game',
           'score',
         ]);
@@ -36,6 +38,35 @@
           layer('game'),
           scale(0.15),
         ]);
+
+        add([
+          sprite('cloud'),
+          pos(50,50),
+          area(),
+          layer('bg'),
+          move(LEFT,100),
+          cleanup(),
+        ]);
+
+        const cloud = ()=>{
+
+          
+          add([
+            sprite('cloud'),
+            pos(width(),50),
+            area(),
+            layer('bg'),
+            move(LEFT,200),
+            scale(rand(0.25,0.5)),
+            cleanup()
+          ]);
+
+          wait(rand(2,5),cloud);
+
+        };
+
+        cloud();
+
         
         let score=0;
 
