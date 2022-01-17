@@ -1,11 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const Pool = require('pg').Pool;
 const pool = new Pool({
-    user: process.env.DBuser,
-    host: process.env.DBhost,
-    database: process.env.DBdatabase,
-    password: process.env.DBpassword,
-    port: process.env.DBport,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
   });
 
 const app = express();
@@ -15,11 +16,11 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/ranks',(req,res)=>{
-    pool.query('SELECT * FROM Ranks',(err,{rows})=>{
-        err?res.send(err):res.send(rows);
+    pool.query('SELECT * FROM Ranks',(err,data)=>{
+        err?res.send(err):res.send(data);
     });
 })
 
 app.listen(4000,()=>{
-    console.log("server running");
+    console.log('server running');
 });
