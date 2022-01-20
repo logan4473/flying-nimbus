@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const Pool = require('pg').Pool;
+const cors = require('cors');
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -10,6 +11,15 @@ const pool = new Pool({
   });
 
 const app = express();
+app.use(cors());
+
+const filter = (data)=>{
+    const arr = [];
+    data.forEach(i => {
+        arr.push({username: i.username,score : i.score});
+    });
+    return arr;
+}
 
 app.get('/',(req,res)=>{
     res.send("hello");
@@ -17,7 +27,7 @@ app.get('/',(req,res)=>{
 
 app.get('/ranks',(req,res)=>{
     pool.query('SELECT * FROM Ranks',(err,data)=>{
-        err?res.send(err):res.send(data);
+        err?res.send(err):res.send(filter(data.rows));
     });
 })
 

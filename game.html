@@ -7,13 +7,6 @@
     <script type="module">
       // import kaboom lib
       import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
-
-      axios.get('http://localhost:4000/ranks').then(({data})=>{
-        console.log(data);
-      }).catch((err)=>{
-        console.log(err);
-      });
-
       // initialize kaboom context
       kaboom({
         background: [ 82, 255, 255 ],
