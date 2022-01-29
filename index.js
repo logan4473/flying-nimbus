@@ -33,6 +33,9 @@ app.get('/login',(req,res)=>{
     res.sendFile(__dirname + '/login.html');
 });
 
+app.get('/api/img/:id',(req,res)=>{
+    res.sendFile(__dirname + `/src/${req.params.id}.png`);
+});
 
 app.get('/game',(req,res)=>{
     res.sendFile(__dirname + '/game.html');
