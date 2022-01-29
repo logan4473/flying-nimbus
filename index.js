@@ -33,6 +33,11 @@ app.get('/login',(req,res)=>{
     res.sendFile(__dirname + '/login.html');
 });
 
+
+app.get('/game',(req,res)=>{
+    res.sendFile(__dirname + '/game.html');
+});
+
 app.get('api/ranks',(req,res)=>{
     pool.query('SELECT * FROM Ranks',(err,data)=>{
         err?res.send(err):res.send(filter(data.rows));
