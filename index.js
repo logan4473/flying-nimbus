@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const port = process.env.PORT || 4000 ;
 const Pool = require('pg').Pool;
 const cors = require('cors');
 const pool = new Pool({
@@ -31,6 +32,6 @@ app.get('/ranks',(req,res)=>{
     });
 })
 
-app.listen(4000,()=>{
+app.listen(port,()=>{
     console.log('server running');
 });
