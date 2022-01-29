@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const port = process.env.PORT || 4000 ;
 const Pool = require('pg').Pool;
 const cors = require('cors');
@@ -23,10 +24,10 @@ const filter = (data)=>{
 }
 
 app.get('/',(req,res)=>{
-    res.send("hello");
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.get('/ranks',(req,res)=>{
+app.get('api/ranks',(req,res)=>{
     pool.query('SELECT * FROM Ranks',(err,data)=>{
         err?res.send(err):res.send(filter(data.rows));
     });
