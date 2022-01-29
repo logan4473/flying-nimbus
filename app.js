@@ -19,8 +19,6 @@ const pool = new Pool({
 const app = express();
 app.use(cors());
 
-app.use(express.static("public"))
-
 const filter = (data)=>{
     const arr = [];
     data.forEach(i => {
@@ -30,14 +28,18 @@ const filter = (data)=>{
 }
 
 app.get('/',(req,res)=>{
-    res.send("hello");
+    res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/login',(req,res)=>{
+    res.sendFile(__dirname + '/login.html');
 });
 
 app.get('/ranks',(req,res)=>{
     pool.query('SELECT * FROM Ranks',(err,data)=>{
         err?res.send(err):res.send(filter(data.rows));
     });
-})
+});
 
 app.listen(port,()=>{
     console.log('server running');
