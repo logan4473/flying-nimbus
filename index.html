@@ -9,10 +9,11 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <div class="d-flex justify-content-center">
       <a href="/login" class="btn btn-primary position-relative mt-3 mb-3">Login</a>
+      <a href="/game" class="btn btn-primary position-relative mt-3 mb-3">Guest</a>
       </div>
       <div id="scoreBoard"></div>
       <script type="module">
-          axios.get('https://flying-nimbus.herokuapp.com/ranks').then(({data})=>{
+          axios.get('https://flying-nimbus.herokuapp.com/api/ranks').then(({data})=>{
             const scoreBoard = document.getElementById('scoreBoard');
             scoreBoard.innerHTML = '<table id="scoreTable" class = "table table-bordered"><thead><tr><th>Username</th><th>Score</th></tr></thead><tbody>';
             const scoreTable = document.getElementById('scoreTable');
