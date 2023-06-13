@@ -49,7 +49,7 @@
           body(),
           area(),
           pos(50, height() / 2),
-          layer("game"),
+          //layer("game"),
           scale(0.15),
         ]);
 
@@ -57,7 +57,7 @@
           sprite("cloud"),
           pos(50, 50),
           area(),
-          layer("bg"),
+          //layer("bg"),
           move(LEFT, 100),
           offscreen({ destroy: true }),
         ]);
@@ -67,7 +67,7 @@
             sprite("cloud"),
             pos(width(), 50),
             area(),
-            layer("bg"),
+            //layer("bg"),
             move(LEFT, 200),
             scale(rand(0.25, 0.5)),
             offscreen({ destroy: true }),
@@ -83,7 +83,7 @@
         const scoreLabel = add([
           text(score),
           pos(width() / 2, 50),
-          layer("score"),
+          //layer("score"),
           fixed(),
         ]);
 
@@ -92,7 +92,7 @@
           pos(0, height() - 50),
           body({ isStatic: true })(),
           area(),
-          layer("game"),
+          //layer("game"),
           color(0, 0, 0),
         ]);
 
@@ -100,7 +100,7 @@
           rect(width(), 50),
           pos(0, 0),
           body({ isStatic: true })(),
-          layer("game"),
+          //layer("game"),
           area(),
           color(0, 0, 0),
         ]);
@@ -122,7 +122,7 @@
             body({ isStatic: true })(),
             area(),
             color(0, 0, 0),
-            layer("game"),
+            //layer("game"),
             move(LEFT, 240),
             offscreen({ destroy: true }),
             "piller",
@@ -133,7 +133,7 @@
             pos(width(), height() - (h + 50)),
             body({ isStatic: true })(),
             area(),
-            layer("game"),
+            //layer("game"),
             color(0, 0, 0),
             move(LEFT, 240),
             offscreen({ destroy: true }),
