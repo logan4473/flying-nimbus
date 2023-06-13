@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>game</title>
+  </head>
+  <body>
+    <script type="module">
+      // import kaboom lib
+      import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
+      // initialize kaboom context
+      kaboom({
+        background: [ 82, 255, 255 ],
+      });
+
+      loadSprite('player','/api/img/player');
+      loadSprite('cloud','/api/img/cloud');
+      loadSprite('home','/api/img/home');
+
+      onKeyPress("f", () => {
+        fullscreen(!isFullscreen())
+      });
+
+      scene('home',()=>{
+
+        add([
+          sprite('home'),
+          pos(center()),
+          origin('center'),
+        ]);
+
+        add([
+          text(width()>=1025?'Press Space to Start':'Tap to Start'),
+          pos(center()),
+          origin('center')
+        ]);
+
+        onKeyPress('space',()=>{
+          go('game');
+        });
+
+        onClick(()=>{
+          go('game');
+        })
+
+      });
+
+      scene('game',()=>{
+
+        layers([
+          'bg',
+          'game',
+          'score',
+        ]);
+
+        gravity(200);
+
+        const player = add([
+          sprite('player'),
+          body(),
+          area(),
+          pos(50,height()/2),
+          layer('game'),
+          scale(0.15),
+        ]);
+
+        add([
+          sprite('cloud'),
+          pos(50,50),
+          area(),
+          layer('bg'),
+          move(LEFT,100),
+          cleanup(),
+        ]);
+
+        const cloud = ()=>{
+
+          
+          add([
+            sprite('cloud'),
+            pos(width(),50),
+            area(),
+            layer('bg'),
+            move(LEFT,200),
+            scale(rand(0.25,0.5)),
+            cleanup()
+          ]);
+
+          wait(rand(2,5),cloud);
+
+        };
+
+        cloud();
+
+        
+        let score=0;
+
+        const scoreLabel = add([
+          text(score),
+          pos(width()/2,50),
+          layer('score'),
+          fixed(),
+        ]);
+
+        add([
+          rect(width(),50),
+          pos(0,height()-50),
+          solid(),
+          area(),
+          layer('game'),
+          color(0,0,0)
+        ]);
+  
+        add([
+          rect(width(),50),
+          pos(0,0),
+          solid(),
+          layer('game'),
+          area(),
+          color(0,0,0)
+        ]);
+      
+
+      onKeyPress('space',()=>{
+        player.jump(200)
+      });
+
+      onClick(()=>{
+        player.jump(200)
+      });
+
+      const obstacle = ()=>{
+        
+        const h = rand(height()/2-250,height()/2-150);
+
+        add([
+          rect(50,h),
+          pos(width(),50),
+          solid(),
+          area(),
+          color(0,0,0),
+          layer('game'),
+          move(LEFT,240),
+          cleanup(),
+          'piller',
+        ]);
+
+        
+
+        add([
+          rect(50,h),
+          pos(width(),height()-(h+50)),
+          solid(),
+          area(),
+          layer('game'),
+          color(0,0,0),
+          move(LEFT,240),
+          cleanup(),
+          'piller',
+        ]);
+
+        wait(rand(0.5,1.5),obstacle); 
+
+      }
+
+      obstacle();
+
+      onUpdate('piller',(p)=>{
+        if(p.pos.x<-50)
+        {
+          score++;
+          scoreLabel.text = score/2;
+        }
+      });
+
+      
+
+      player.onCollide('piller',()=>{
+        shake();
+        go('over');
+      });
+
+
+    });
+
+    scene('over',()=>{
+      const gameOver =  add([
+        text('Game Over'),
+        pos(center()),
+        origin('center'),
+      ]);
+
+      add([
+          text(width()>=1025?'Press Space to Try Again':'Tap to Try Again'),
+          pos(gameOver.pos.x,gameOver.pos.y+100),
+          origin('center')
+      ]);
+
+      onKeyPress('space',()=>{
+        go('game');
+      });
+
+      onClick(()=>{
+        go('game');
+      });
+
+    });
+
+    go('home');
+
+    </script>
+  </body>
+</html>

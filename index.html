@@ -25,9 +25,7 @@
         add([sprite("home"), pos(center()), anchor("center")]);
 
         add([
-          text(width() >= 1025 ? "Press Space to Start" : "Tap to Start", {
-            align: "center",
-          }),
+          text(width() >= 1025 ? "Press Space to Start" : "Tap to Start"),
           pos(center()),
           anchor("center"),
         ]);
@@ -42,7 +40,7 @@
       });
 
       scene("game", () => {
-        //layers(["bg", "game", "score"]);
+        layers(["bg", "game", "score"]);
 
         setGravity(200);
 
@@ -51,7 +49,7 @@
           body(),
           area(),
           pos(50, height() / 2),
-          //layer("game"),
+          layer("game"),
           scale(0.15),
         ]);
 
@@ -59,7 +57,7 @@
           sprite("cloud"),
           pos(50, 50),
           area(),
-          //layer("bg"),
+          layer("bg"),
           move(LEFT, 100),
           offscreen({ destroy: true }),
         ]);
@@ -69,7 +67,7 @@
             sprite("cloud"),
             pos(width(), 50),
             area(),
-            // layer("bg"),
+            layer("bg"),
             move(LEFT, 200),
             scale(rand(0.25, 0.5)),
             offscreen({ destroy: true }),
@@ -85,24 +83,24 @@
         const scoreLabel = add([
           text(score),
           pos(width() / 2, 50),
-          // layer("score"),
+          layer("score"),
           fixed(),
         ]);
 
         add([
           rect(width(), 50),
           pos(0, height() - 50),
-          body({ isStatic: true }),
+          body({ isStatic: true })(),
           area(),
-          //layer("game"),
+          layer("game"),
           color(0, 0, 0),
         ]);
 
         add([
           rect(width(), 50),
           pos(0, 0),
-          body({ isStatic: true }),
-          //layer("game"),
+          body({ isStatic: true })(),
+          layer("game"),
           area(),
           color(0, 0, 0),
         ]);
@@ -121,10 +119,10 @@
           add([
             rect(50, h),
             pos(width(), 50),
-            body({ isStatic: true }),
+            body({ isStatic: true })(),
             area(),
             color(0, 0, 0),
-            //layer("game"),
+            layer("game"),
             move(LEFT, 240),
             offscreen({ destroy: true }),
             "piller",
@@ -133,9 +131,9 @@
           add([
             rect(50, h),
             pos(width(), height() - (h + 50)),
-            body({ isStatic: true }),
+            body({ isStatic: true })(),
             area(),
-            //layer("game"),
+            layer("game"),
             color(0, 0, 0),
             move(LEFT, 240),
             offscreen({ destroy: true }),
@@ -162,15 +160,14 @@
 
       scene("over", () => {
         const gameOver = add([
-          text("Game Over", { align: "center" }),
+          text("Game Over"),
           pos(center()),
           anchor("center"),
         ]);
 
         add([
           text(
-            width() >= 1025 ? "Press Space to Try Again" : "Tap to Try Again",
-            { align: "center" }
+            width() >= 1025 ? "Press Space to Try Again" : "Tap to Try Again"
           ),
           pos(gameOver.pos.x, gameOver.pos.y + 100),
           anchor("center"),
